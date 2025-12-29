@@ -59,22 +59,22 @@ unset($_SESSION['quiz_error']);
                 <?php else: ?>
                     <form action="../../actions/quiz_create.php" method="POST" id="quizForm">
                         <input type="hidden" name="csrf_token" value="<?= Security::generateCSRFToken() ?>">
-                        
+
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 <i class="fas fa-heading mr-2"></i>Titre du Quiz *
                             </label>
-                            <input type="text" name="titre" required 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                   placeholder="Ex: Quiz HTML/CSS Niveau 1">
+                            <input type="text" name="titre" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="Ex: Quiz HTML/CSS Niveau 1">
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 <i class="fas fa-folder mr-2"></i>Catégorie *
                             </label>
-                            <select name="categorie_id" required 
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <select name="categorie_id" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                                 <option value="">Sélectionnez une catégorie</option>
                                 <?php foreach ($categories as $cat): ?>
                                     <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['nom']) ?></option>
@@ -86,9 +86,9 @@ unset($_SESSION['quiz_error']);
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 <i class="fas fa-align-left mr-2"></i>Description
                             </label>
-                            <textarea name="description" rows="3" 
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                      placeholder="Décrivez votre quiz..."></textarea>
+                            <textarea name="description" rows="3"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="Décrivez votre quiz..."></textarea>
                         </div>
 
                         <hr class="my-6">
@@ -99,12 +99,12 @@ unset($_SESSION['quiz_error']);
                                 <h3 class="text-xl font-bold text-gray-900">
                                     <i class="fas fa-question-circle mr-2 text-indigo-600"></i>Questions
                                 </h3>
-                                <button type="button" onclick="addQuestion()" 
-                                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm">
+                                <button type="button" onclick="addQuestion()"
+                                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm">
                                     <i class="fas fa-plus mr-2"></i>Ajouter une question
                                 </button>
                             </div>
-                            
+
                             <p class="text-gray-600 text-sm mb-4">
                                 <i class="fas fa-info-circle mr-1"></i>
                                 Vous devez ajouter au moins une question pour créer le quiz.
@@ -116,17 +116,18 @@ unset($_SESSION['quiz_error']);
 
                             <div id="noQuestionsMsg" class="bg-gray-50 rounded-lg p-6 text-center">
                                 <i class="fas fa-question-circle text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-gray-500">Aucune question ajoutée. Cliquez sur "Ajouter une question" pour commencer.</p>
+                                <p class="text-gray-500">Aucune question ajoutée. Cliquez sur "Ajouter une question" pour
+                                    commencer.</p>
                             </div>
                         </div>
 
                         <div class="flex gap-4">
-                            <a href="quiz.php" 
-                               class="flex-1 text-center px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                            <a href="quiz.php"
+                                class="flex-1 text-center px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
                                 Annuler
                             </a>
                             <button type="submit" id="submitBtn"
-                                    class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
+                                class="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold">
                                 <i class="fas fa-plus-circle mr-2"></i>Créer le Quiz
                             </button>
                         </div>
@@ -213,7 +214,7 @@ unset($_SESSION['quiz_error']);
                             if (questionDiv) {
                                 questionDiv.remove();
                                 updateQuestionNumbers();
-                                
+
                                 // Vérifier s'il reste des questions
                                 const container = document.getElementById('questionsContainer');
                                 const noMsg = document.getElementById('noQuestionsMsg');
@@ -234,7 +235,7 @@ unset($_SESSION['quiz_error']);
                         }
 
                         // Validation avant soumission
-                        document.getElementById('quizForm').addEventListener('submit', function(e) {
+                        document.getElementById('quizForm').addEventListener('submit', function (e) {
                             const container = document.getElementById('questionsContainer');
                             if (container.children.length === 0) {
                                 e.preventDefault();
@@ -244,7 +245,7 @@ unset($_SESSION['quiz_error']);
                         });
 
                         // Ajouter une première question par défaut
-                        document.addEventListener('DOMContentLoaded', function() {
+                        document.addEventListener('DOMContentLoaded', function () {
                             addQuestion();
                         });
                     </script>
@@ -255,4 +256,3 @@ unset($_SESSION['quiz_error']);
 </div>
 
 <?php include '../partials/footer.php'; ?>
-
