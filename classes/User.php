@@ -190,7 +190,7 @@ class User
 
     // Connexion utilisateur
 
-    public function login($email, $password)
+    public function login($email, $password): mixed
     {
         $sql = "SELECT * FROM users WHERE email = ? AND deleted_at IS NULL";
         $result = $this->db->query($sql, [$email]);
@@ -266,5 +266,12 @@ class User
         } catch (Exception $e) {
             return false;
         }
+    }
+
+    public function initialAVatar($name)
+    {
+        $names = explode(' ', $name);
+        $initials = strtoupper(substr($names[0], 0, 1) . (isset($names[1]) ? substr($names[1], 0, 1) : ''));
+        return $initials;
     }
 }

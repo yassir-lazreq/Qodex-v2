@@ -116,9 +116,16 @@ class Category
 
     // Récupère toutes les catégories (pour les sélections)
 
-    public function getAll()
+    public function getAllCategories(): array
     {
-        $sql = "SELECT * FROM categories ORDER BY nom ASC";
+        $sql = "SELECT c.id, c.nom, c.description, 
+            COUNT(DISTINCT q.id) as quiz_count,
+            COUNT(DISTINCT CASE WHEN q.is_active = 1 THEN q.id END) as active_quiz_count
+            FROM categories c
+            LEFT JOIN quiz q ON c.id = q.categorie_id
+            GROUP BY c.id, c.nom, c.description
+            HAVING active_quiz_count > 0
+            ORDER BY c.nom ASC";
         $result = $this->db->query($sql);
         return $result->fetchAll();
     }
