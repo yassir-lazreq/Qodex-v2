@@ -269,6 +269,7 @@ class User
         }
     }
 
+    // Génère les initiales pour l'avatar utilisateur
     public function initialAvatar($name)
     {
         $names = explode(' ', $name);
