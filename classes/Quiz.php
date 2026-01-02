@@ -140,4 +140,17 @@ class Quiz
         $result = $this->db->query($sql, [$quizId]);
         return $result->fetch();
     }
+    // Récupère les quiz actifs par catégorie pour les étudiants
+
+    public function getActiveByCategory($categoryId, $studentId)
+    {
+        $sql = "SELECT q.*, 
+            (SELECT COUNT(*) FROM results r WHERE r.quiz_id = q.id AND r.etudiant_id = ?) as is_completed
+            FROM quiz q
+            WHERE q.categorie_id = ? AND q.is_active = 1
+            ORDER BY q.created_at DESC";
+        $result = $this->db->query($sql, [$studentId, $categoryId]);
+        return $result->fetchAll();
+    }
 }
+

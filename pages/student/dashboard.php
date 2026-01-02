@@ -9,6 +9,8 @@ require_once '../../classes/Database.php';
 require_once '../../classes/Security.php';
 require_once '../../classes/Category.php';
 require_once '../../classes/Quiz.php';
+require_once '../../classes/Result.php';
+require_once '../../classes/User.php';
 
 // Vérifier que l'utilisateur est étudiant
 Security::requireStudent();
@@ -32,7 +34,7 @@ $stats = $studentObj->getMyStats($studentId);
 
 // Initiales pour l'avatar
 $userObj = new User();
-$initials = $userObj->initialAVatar($userName);
+$initials = $userObj->initialAvatar($userName);
 ?>
 <?php include '../partials/header.php'; ?>
 
@@ -69,7 +71,7 @@ $initials = $userObj->initialAVatar($userName);
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-gray-500 text-sm">Score Moyen</p>
-                        <p class="text-3xl font-bold text-gray-900"><?= $stats['average_score'] ? number_format($stats['moyenne'], 1) . '%' : '0%' ?></p>
+                        <p class="text-3xl font-bold text-gray-900"><?= $stats['moyenne'] ? number_format($stats['moyenne'], 1) . '%' : '0%' ?></p>
                     </div>
                     <div class="bg-yellow-100 p-3 rounded-lg">
                         <i class="fas fa-chart-line text-yellow-600 text-2xl"></i>
@@ -106,13 +108,8 @@ $initials = $userObj->initialAVatar($userName);
                     <?php foreach ($categories as $category): ?>
                         <?php
                         // Récupérer les quiz actifs pour cette catégorie
-                        $quizSQL = "SELECT q.*, 
-                            (SELECT COUNT(*) FROM results r WHERE r.quiz_id = q.id AND r.etudiant_id = ?) as is_completed
-                            FROM quiz q
-                            WHERE q.categorie_id = ? AND q.is_active = 1
-                            ORDER BY q.created_at DESC";
-                        $quizResult = $db->query($quizSQL, [$studentId, $category['id']]);
-                        $categoryQuizzes = $quizResult->fetchAll();
+                        $quizObj = new Quiz();
+                        $categoryQuizzes = $quizObj->getActiveByCategory($category['id'], $studentId);
                         ?>
                         
                         <!-- Carte Catégorie -->
@@ -154,12 +151,12 @@ $initials = $userObj->initialAVatar($userName);
                                                         <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold whitespace-nowrap">
                                                             <i class="fas fa-check mr-1"></i>Complété
                                                         </span>
-                                                        <a href="quiz_review.php?id=<?= $quiz['id'] ?>" 
+                                                        <a href="take_quiz.php?quiz_id=<?= $quiz['id'] ?>" 
                                                            class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-semibold hover:bg-gray-200 transition text-center whitespace-nowrap">
-                                                            <i class="fas fa-eye mr-1"></i>Revoir
+                                                            <i class="fas fa-redo mr-1"></i>Refaire
                                                         </a>
                                                     <?php else: ?>
-                                                        <a href="quiz_attempt.php?id=<?= $quiz['id'] ?>" 
+                                                        <a href="take_quiz.php?quiz_id=<?= $quiz['id'] ?>" 
                                                            class="bg-indigo-600 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-indigo-700 transition whitespace-nowrap">
                                                             <i class="fas fa-play mr-1"></i>Commencer
                                                         </a>

@@ -10,7 +10,7 @@ require_once '../../classes/Security.php';
 require_once '../../classes/Result.php';
 
 // Vérifier que l'utilisateur est connecté
-Security::requireLogin();
+Security::requireStudent();
 
 // Variables pour la navigation
 $currentPage = 'resultats';
@@ -29,7 +29,7 @@ $mesStats = $resultObj->getMyStats($userId);
 ?>
 <?php include '../partials/header.php'; ?>
 
-<?php include '../partials/nav_teacher.php'; ?>
+<?php include '../partials/nav_student.php'; ?>
 
 <!-- Main Content -->
 <div class="pt-16">

@@ -70,7 +70,7 @@ if (strpos($_SERVER['PHP_SELF'], '/teacher/') !== false) {
                     
                     <!-- Bouton Déconnexion -->
                     <a href="<?= $basePath ?>auth/logout.php?token=<?= Security::generateCSRFToken() ?>" 
-                       class="text-red-600 hover:text-red-700" title="Déconnexion">
+                        class="text-red-600 hover:text-red-700" title="Déconnexion">
                         <i class="fas fa-sign-out-alt text-xl"></i>
                     </a>
                 </div>

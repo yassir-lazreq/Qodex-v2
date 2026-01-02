@@ -95,7 +95,7 @@ class Security
     {
         self::requireLogin();
         if (!self::isTeacher()) {
-            header('Location: ../teacher/dashboard.php');
+            header('Location: ../student/dashboard.php');
             exit();
         }
     }
@@ -113,7 +113,7 @@ class Security
     {
         self::requireLogin();
         if (!self::isStudent()) {
-            header('Location: ../student/dashboard.php');
+            header('Location: ../teacher/dashboard.php');
             exit();
         }
     }

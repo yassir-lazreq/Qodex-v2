@@ -37,7 +37,7 @@ if (strpos($_SERVER['PHP_SELF'], '/student/') !== false) {
                     <!-- Mes Quiz -->
                     <a href="<?= $basePath ?>student/mes_quiz.php" 
                        class="<?= ($currentPage ?? '') === 'mes_quiz' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        <i class="fas fa-clipboard-list mr-2"></i>Mes Quiz
+                        <i class="fas fa-clipboard-list mr-2"></i>Mes catégories
                     </a>
                     
                     <!-- Mes Résultats -->
@@ -62,15 +62,15 @@ if (strpos($_SERVER['PHP_SELF'], '/student/') !== false) {
 
                     <!-- Dropdown Menu -->
                     <div x-show="open" 
-                         @click.away="open = false"
-                         x-transition:enter="transition ease-out duration-100"
-                         x-transition:enter-start="transform opacity-0 scale-95"
-                         x-transition:enter-end="transform opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-75"
-                         x-transition:leave-start="transform opacity-100 scale-100"
-                         x-transition:leave-end="transform opacity-0 scale-95"
-                         class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
-                         style="display: none;">
+                            @click.away="open = false"
+                            x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-95"
+                            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
+                            style="display: none;">
                         <a href="<?= $basePath ?>auth/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
                         </a>

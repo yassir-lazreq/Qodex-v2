@@ -45,7 +45,7 @@ class Category
     }
 
 
-    public function getById($id)
+    public function getById($id): mixed
     {
         $sql = "SELECT * FROM categories WHERE id = ?";
         $result = $this->db->query($sql, [$id]);

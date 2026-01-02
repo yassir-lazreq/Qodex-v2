@@ -190,7 +190,7 @@ class User
 
     // Connexion utilisateur
 
-    public function login($email, $password): mixed
+    public function login($email, $password): array|false
     {
         $sql = "SELECT * FROM users WHERE email = ? AND deleted_at IS NULL";
         $result = $this->db->query($sql, [$email]);
@@ -224,6 +224,7 @@ class User
         session_destroy();
         session_start();
         session_regenerate_id(true);
+        $_SESSION['initiated'] = true;
     }
 
     // Récupère un utilisateur par ID
@@ -268,7 +269,7 @@ class User
         }
     }
 
-    public function initialAVatar($name)
+    public function initialAvatar($name)
     {
         $names = explode(' ', $name);
         $initials = strtoupper(substr($names[0], 0, 1) . (isset($names[1]) ? substr($names[1], 0, 1) : ''));

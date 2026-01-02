@@ -9,6 +9,11 @@ require_once '../classes/Database.php';
 require_once '../classes/Security.php';
 require_once '../classes/User.php';
 
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Vérifier que c'est une requête POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../pages/auth/login.php');
