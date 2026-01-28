@@ -45,12 +45,6 @@ if (strpos($_SERVER['PHP_SELF'], '/teacher/') !== false) {
                        class="<?= ($currentPage ?? '') === 'quiz' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         <i class="fas fa-clipboard-list mr-2"></i>Mes Quiz
                     </a>
-                    
-                    <!-- Mes Résultats -->
-                    <a href="<?= $basePath ?>teacher/mes_resultats.php" 
-                       class="<?= ($currentPage ?? '') === 'resultats' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        <i class="fas fa-chart-bar mr-2"></i>Mes Résultats
-                    </a>
                 </div>
             </div>
             

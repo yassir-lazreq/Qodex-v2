@@ -10,11 +10,10 @@ require_once '../../classes/Security.php';
 require_once '../../classes/User.php';
 
 // Vérifier le token CSRF pour la déconnexion
-if (isset($_GET['token']) && Security::verifyCSRFToken($_GET['token'])) {
+if (!isset($_GET['csrf_token']) || !Security::verifyCSRFToken($_GET['csrf_token'])) {
     $user = new User();
     $user->logout();
 }
-
 // Rediriger vers la page de connexion
 header('Location: login.php');
 exit();

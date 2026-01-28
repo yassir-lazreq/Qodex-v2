@@ -82,4 +82,66 @@ class Result {
         $result = $this->db->query($sql, [$etudiantId]);
         return $result->fetch();
     }
+    
+    /**
+     * Récupère les résultats des quiz créés par un enseignant
+     * @param int $teacherId - L'ID de l'enseignant
+     * @return array - Liste des résultats des étudiants
+     */
+    public function getResultsByTeacher($teacherId) {
+        $sql = "SELECT r.*, q.titre as quiz_titre, c.nom as categorie_nom,
+                       u.nom as etudiant_nom, u.email as etudiant_email
+                FROM results r
+                LEFT JOIN quiz q ON r.quiz_id = q.id
+                LEFT JOIN categories c ON q.categorie_id = c.id
+                LEFT JOIN users u ON r.etudiant_id = u.id
+                WHERE q.created_by = ?
+                ORDER BY r.created_at DESC";
+        
+        $result = $this->db->query($sql, [$teacherId]);
+        return $result->fetchAll();
+    }
+    
+    /**
+     * Calcule les statistiques des quiz d'un enseignant
+     * @param int $teacherId
+     * @return array
+     */
+    public function getTeacherStats($teacherId) {
+        $sql = "SELECT 
+                    COUNT(*) as total_participations,
+                    COUNT(DISTINCT r.etudiant_id) as total_etudiants,
+                    AVG(r.score / r.total_questions * 100) as moyenne_globale,
+                    MAX(r.score / r.total_questions * 100) as meilleur_score
+                FROM results r
+                LEFT JOIN quiz q ON r.quiz_id = q.id
+                WHERE q.created_by = ?";
+        
+        $result = $this->db->query($sql, [$teacherId]);
+        return $result->fetch();
+    }
+    
+    /**
+     * Récupère les statistiques par quiz pour un enseignant
+     * @param int $teacherId
+     * @return array
+     */
+    public function getStatsByQuiz($teacherId) {
+        $sql = "SELECT 
+                    q.id,
+                    q.titre,
+                    COUNT(r.id) as participations,
+                    AVG(r.score / r.total_questions * 100) as moyenne,
+                    MIN(r.score / r.total_questions * 100) as score_min,
+                    MAX(r.score / r.total_questions * 100) as score_max
+                FROM quiz q
+                LEFT JOIN results r ON q.id = r.quiz_id
+                WHERE q.created_by = ?
+                GROUP BY q.id, q.titre
+                HAVING participations > 0
+                ORDER BY participations DESC";
+        
+        $result = $this->db->query($sql, [$teacherId]);
+        return $result->fetchAll();
+    }
 }
